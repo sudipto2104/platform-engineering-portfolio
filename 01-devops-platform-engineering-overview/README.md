@@ -14,34 +14,39 @@ pip install -r requirements.txt && python app.py
 # or: docker build -t taskflow:week1 . && docker run --rm -p 8080:8080 taskflow:week1
 ```
 
-## Labs and projects
+## Labs
 
-| Directory | Type | What you do |
-|-----------|------|-------------|
-| [`lab-platform-path/`](./lab-platform-path/) | Lab | End-to-end slice: Git → Docker → Terraform → scale → observe |
-| [`lab-dev-environment/`](./lab-dev-environment/) | Lab | VS Code, terminal, Git, and SSH setup |
-| [`lab-devops-analysis/`](./lab-devops-analysis/) | Lab | DORA metrics and DevOps maturity (Meridian Retail) |
-| [`lab-idp-strategy/`](./lab-idp-strategy/) | Lab | IDP strategy consulting for NovaStream startup |
-| [`project-taskflow-vision/`](./project-taskflow-vision/) | Project | Vision, features, user stories, success metrics |
-| [`project-taskflow-documentation/`](./project-taskflow-documentation/) | Project | README, CONTRIBUTING, architecture and API docs |
-| [`project-taskflow-architecture/`](./project-taskflow-architecture/) | Project | Technology decisions, system diagrams, component interactions |
+| Directory | What you do |
+|-----------|-------------|
+| [`lab-platform-path/`](./lab-platform-path/) | Git → Docker → Terraform → scale → observe |
+| [`lab-dev-environment/`](./lab-dev-environment/) | VS Code, terminal, Git, SSH setup |
+| [`lab-devops-analysis/`](./lab-devops-analysis/) | DORA metrics and DevOps maturity (Meridian Retail) |
+| [`lab-idp-strategy/`](./lab-idp-strategy/) | IDP strategy consulting (NovaStream) |
+| [`lab-platform-automation/`](./lab-platform-automation/) | Automation thinking — scripts, idempotence, logging |
 
-Each lab and project includes `scripts/check.sh` (verify) and `scripts/solve.sh` (reference solution). The platform-path lab also includes `scripts/observe.sh`.
+## Projects
+
+| Directory | What you do |
+|-----------|-------------|
+| [`project-taskflow-vision/`](./project-taskflow-vision/) | Vision, features, user stories, metrics |
+| [`project-taskflow-documentation/`](./project-taskflow-documentation/) | README, CONTRIBUTING, architecture & API docs |
+| [`project-taskflow-architecture/`](./project-taskflow-architecture/) | ADRs, diagrams, component interactions |
+| [`project-taskflow-development-plan/`](./project-taskflow-development-plan/) | MVP, 20-week sprint plan, risk register |
+| [`project-devops-transformation/`](./project-devops-transformation/) | **Capstone** — maturity, strategy, ROI, prototypes |
+
+Each lab and project includes `scripts/check.sh` and `scripts/solve.sh`. Platform-path also has `scripts/observe.sh`.
 
 ## Quick start
 
-**Platform path (hands-on toolchain):**
-
 ```bash
-cd lab-platform-path
-./scripts/solve.sh && ./scripts/observe.sh && ./scripts/check.sh
-```
+# Automation lab
+cd lab-platform-automation && ./scripts/solve.sh && ./scripts/check.sh
 
-**Documentation (publish to TaskFlow):**
+# Transformation capstone
+cd project-devops-transformation && ./scripts/solve.sh && ./scripts/check.sh
 
-```bash
-cd project-taskflow-documentation
-./scripts/solve.sh && ./scripts/check.sh
+# Development plan
+cd project-taskflow-development-plan && ./scripts/solve.sh && ./scripts/check.sh
 ```
 
 ## Platform layers (Week 1)
@@ -52,12 +57,11 @@ Git (source) → Docker (image) → Terraform (IaC) → Scale (replicas) → Obs
 
 ## Learning outcomes
 
-- Connect major platform layers and understand handoffs between them
-- Think strategically about IDP capabilities, team structure, and roadmaps
-- Apply DORA metrics to organizational DevOps maturity
-- Define TaskFlow vision and technical architecture before deep implementation
-- Produce portfolio-grade documentation employers can evaluate on GitHub
+- Connect platform layers and automate repetitive workflows responsibly
+- Think strategically about IDP design and DevOps transformation
+- Produce portfolio-grade documentation, architecture, and executive business cases
+- Plan TaskFlow delivery across the full 21-week bootcamp
 
 ## Status
 
-Week 1 complete — 4 labs, 3 projects, TaskFlow stub, check/solve scripts, and reference solutions.
+Week 1 complete — 5 labs, 5 projects, TaskFlow stub, check/solve scripts, reference solutions.

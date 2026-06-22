@@ -1,0 +1,11 @@
+id,category,summary,hours
+101,env_access,Staging credentials reset,2
+102,env_access,Staging credentials reset,1.5
+103,deploy,Manual ECS deploy playback-api,3
+104,onboarding,New hire laptop setup checklist,4
+105,env_access,Prod read-only role request,2
+106,deploy,Manual ECS deploy billing-api,3
+107,monitoring,Create Datadog dashboard,2
+108,env_access,Staging credentials reset,1
+109,deploy,Manual ECS deploy playback-api,2.5
+110,onboarding,New hire laptop setup checklist,3
