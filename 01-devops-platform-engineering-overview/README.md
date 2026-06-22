@@ -18,20 +18,30 @@ pip install -r requirements.txt && python app.py
 
 | Directory | Type | What you do |
 |-----------|------|-------------|
-| [`lab-platform-path/`](./lab-platform-path/) | Hands-on lab | End-to-end slice: Git → Docker → Terraform → scale → observe |
-| [`lab-dev-environment/`](./lab-dev-environment/) | Hands-on lab | VS Code, terminal, Git, and SSH setup |
-| [`lab-devops-analysis/`](./lab-devops-analysis/) | Hands-on lab | DORA metrics and DevOps maturity analysis (Meridian Retail scenario) |
-| [`project-taskflow-vision/`](./project-taskflow-vision/) | Project | TaskFlow vision, features, user stories, success metrics |
+| [`lab-platform-path/`](./lab-platform-path/) | Lab | End-to-end slice: Git → Docker → Terraform → scale → observe |
+| [`lab-dev-environment/`](./lab-dev-environment/) | Lab | VS Code, terminal, Git, and SSH setup |
+| [`lab-devops-analysis/`](./lab-devops-analysis/) | Lab | DORA metrics and DevOps maturity (Meridian Retail) |
+| [`lab-idp-strategy/`](./lab-idp-strategy/) | Lab | IDP strategy consulting for NovaStream startup |
+| [`project-taskflow-vision/`](./project-taskflow-vision/) | Project | Vision, features, user stories, success metrics |
+| [`project-taskflow-documentation/`](./project-taskflow-documentation/) | Project | README, CONTRIBUTING, architecture and API docs |
+| [`project-taskflow-architecture/`](./project-taskflow-architecture/) | Project | Technology decisions, system diagrams, component interactions |
 
-Each lab includes `scripts/check.sh` (verify) and `scripts/solve.sh` (reference solution). The platform-path lab also includes `scripts/observe.sh` for logs, stats, and Terraform state.
+Each lab and project includes `scripts/check.sh` (verify) and `scripts/solve.sh` (reference solution). The platform-path lab also includes `scripts/observe.sh`.
 
-## Quick start — platform path
+## Quick start
+
+**Platform path (hands-on toolchain):**
 
 ```bash
 cd lab-platform-path
-./scripts/solve.sh    # runs full git → docker → terraform → scale pipeline
-./scripts/observe.sh  # inspect running infrastructure
-./scripts/check.sh    # verify lab completion
+./scripts/solve.sh && ./scripts/observe.sh && ./scripts/check.sh
+```
+
+**Documentation (publish to TaskFlow):**
+
+```bash
+cd project-taskflow-documentation
+./scripts/solve.sh && ./scripts/check.sh
 ```
 
 ## Platform layers (Week 1)
@@ -42,11 +52,12 @@ Git (source) → Docker (image) → Terraform (IaC) → Scale (replicas) → Obs
 
 ## Learning outcomes
 
-- Understand how major platform layers connect and hand off to each other
-- See source code become a container image, then managed infrastructure
-- Apply DORA metrics to assess organizational DevOps maturity
-- Define TaskFlow's vision with business-aligned platform thinking
+- Connect major platform layers and understand handoffs between them
+- Think strategically about IDP capabilities, team structure, and roadmaps
+- Apply DORA metrics to organizational DevOps maturity
+- Define TaskFlow vision and technical architecture before deep implementation
+- Produce portfolio-grade documentation employers can evaluate on GitHub
 
 ## Status
 
-Week 1 coursework complete — labs, TaskFlow stub, check/solve scripts, and reference solutions in place.
+Week 1 complete — 4 labs, 3 projects, TaskFlow stub, check/solve scripts, and reference solutions.
