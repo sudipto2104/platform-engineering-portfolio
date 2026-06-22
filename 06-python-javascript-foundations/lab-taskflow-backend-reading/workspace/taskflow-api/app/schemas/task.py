@@ -1,0 +1,21 @@
+"""Pydantic validation schemas for Task API."""
+
+from pydantic import BaseModel, Field
+
+
+class TaskCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=200)
+    status: str = Field(default="todo", pattern=r"^(todo|in_progress|done)$")
+    owner: str = Field(default="platform-team", max_length=64)
+
+
+class TaskRead(BaseModel):
+    id: int
+    title: str
+    status: str
+    owner: str
+
+
+class TaskListResponse(BaseModel):
+    tasks: list[TaskRead]
+    count: int

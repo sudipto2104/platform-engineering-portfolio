@@ -24,3 +24,8 @@ __pycache__/
 05-shell-scripting-essentials/lab-*/deliverables/*
 !05-shell-scripting-essentials/lab-*/deliverables/.gitkeep
 05-shell-scripting-essentials/lab-loops-automation/workspace/backups/
+
+# Week 6 python/javascript labs
+06-python-javascript-foundations/lab-*/deliverables/*
+!06-python-javascript-foundations/lab-*/deliverables/.gitkeep
+06-python-javascript-foundations/lab-vue-frontend-reading/workspace/taskflow-ui/node_modules/
