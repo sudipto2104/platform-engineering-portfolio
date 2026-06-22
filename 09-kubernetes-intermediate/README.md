@@ -1,14 +1,27 @@
-# Week 9: Kubernetes Intermediate
+# Week 9: Kubernetes Intermediate — Production Deployments
 
-## Overview
+**Slug:** `kubernetes-intermediate`
 
-This directory contains coursework, labs, and projects for **Week 9** — **Kubernetes Intermediate**.
+Production TaskFlow on Kubernetes — Helm multi-env charts, Ingress + TLS + HPA, and RBAC with namespace isolation.
 
-## Contents
+Builds on [`../08-kubernetes-fundamentals/`](../08-kubernetes-fundamentals/).
 
-- Course materials and lab exercises
-- Notes and reference documentation
+## Labs
+
+| Directory | Focus |
+|-----------|--------|
+| [`lab-helm-multi-environment/`](./lab-helm-multi-environment/) | Helm 3 charts — dev, staging, production values |
+| [`lab-ingress-tls-autoscaling/`](./lab-ingress-tls-autoscaling/) | Nginx Ingress 1.12+, TLS, HorizontalPodAutoscaler |
+| [`lab-rbac-namespace-security/`](./lab-rbac-namespace-security/) | Namespaces, RBAC, NetworkPolicy, pod security |
+
+Each lab includes `scripts/check.sh` and `scripts/solve.sh`.
+
+## Quick start
+
+```bash
+cd lab-helm-multi-environment && ./scripts/solve.sh && ./scripts/check.sh
+```
 
 ## Status
 
-1 course
+Week 9 complete — 3 labs, Helm chart, Ingress/HPA, security manifests.

@@ -1,0 +1,48 @@
+# Default values — override per environment file
+global:
+  environment: dev
+
+namespace:
+  create: true
+  name: taskflow
+
+api:
+  enabled: true
+  image:
+    repository: taskflow-api
+    tag: week8
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+  env:
+    logLevel: info
+
+ui:
+  enabled: true
+  image:
+    repository: taskflow-ui
+    tag: week7
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  service:
+    type: ClusterIP
+    port: 80
+
+postgres:
+  enabled: true
+  storage: 1Gi
+
+redis:
+  enabled: true
+
+ingress:
+  enabled: false
+  className: nginx
+  host: taskflow.local
+  tls: false

@@ -41,3 +41,8 @@ __pycache__/
 # Week 8 Kubernetes labs
 08-kubernetes-fundamentals/lab-*/deliverables/*
 !08-kubernetes-fundamentals/lab-*/deliverables/.gitkeep
+
+# Week 9 Kubernetes intermediate labs
+09-kubernetes-intermediate/lab-*/deliverables/*
+!09-kubernetes-intermediate/lab-*/deliverables/.gitkeep
+09-kubernetes-intermediate/lab-helm-multi-environment/deliverables/rendered-*.yaml

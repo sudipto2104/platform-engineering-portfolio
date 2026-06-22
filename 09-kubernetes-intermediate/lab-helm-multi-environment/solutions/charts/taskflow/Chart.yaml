@@ -1,0 +1,12 @@
+apiVersion: v2
+name: taskflow
+description: TaskFlow platform — Helm chart for multi-environment deployment
+type: application
+version: 0.9.0
+appVersion: "0.9.0"
+kubeVersion: ">=1.28.0"
+keywords:
+  - taskflow
+  - platform-engineering
+maintainers:
+  - name: platform-team

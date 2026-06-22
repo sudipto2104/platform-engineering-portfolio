@@ -1,0 +1,19 @@
+global:
+  environment: dev
+
+namespace:
+  name: taskflow-dev
+
+api:
+  replicaCount: 1
+  env:
+    logLevel: debug
+
+ui:
+  replicaCount: 1
+
+postgres:
+  storage: 1Gi
+
+ingress:
+  enabled: false

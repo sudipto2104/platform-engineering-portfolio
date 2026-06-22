@@ -1,0 +1,30 @@
+global:
+  environment: production
+
+namespace:
+  name: taskflow-prod
+
+api:
+  replicaCount: 3
+  image:
+    tag: week8
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+ui:
+  replicaCount: 3
+  service:
+    type: ClusterIP
+
+postgres:
+  storage: 20Gi
+
+ingress:
+  enabled: true
+  host: app.taskflow.example.com
+  tls: true

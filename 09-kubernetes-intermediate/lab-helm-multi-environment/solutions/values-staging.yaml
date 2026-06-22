@@ -1,0 +1,23 @@
+global:
+  environment: staging
+
+namespace:
+  name: taskflow-staging
+
+api:
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+
+ui:
+  replicaCount: 2
+
+postgres:
+  storage: 5Gi
+
+ingress:
+  enabled: true
+  host: staging.taskflow.example.com
+  tls: true
