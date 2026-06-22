@@ -1,0 +1,16 @@
+{
+  "name": "taskflow-frontend-stub",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint stub.js",
+    "format": "prettier --check stub.js",
+    "format:fix": "prettier --write stub.js",
+    "audit": "npm audit --audit-level=high"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.0"
+  }
+}

@@ -1,0 +1,47 @@
+name: TaskFlow Quality Gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  python-quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install ruff black pip-audit
+          pip install -r requirements.txt
+      - name: Ruff lint
+        run: ruff check app.py
+      - name: Black format check
+        run: black --check app.py
+      - name: pip-audit security scan
+        run: pip-audit -r requirements.txt || true
+
+  javascript-quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install
+      - name: ESLint
+        run: npm run lint
+      - name: Prettier check
+        run: npm run format
+      - name: npm audit
+        run: npm audit --audit-level=high || true

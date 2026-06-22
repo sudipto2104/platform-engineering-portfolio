@@ -8,3 +8,8 @@ __pycache__/
 01-devops-platform-engineering-overview/taskflow/.git/
 01-devops-platform-engineering-overview/lab-platform-path/terraform/.terraform/
 01-devops-platform-engineering-overview/lab-platform-path/terraform/terraform.tfstate*
+
+# Week 3 git sandbox (local lab state)
+03-version-control-git-github/taskflow-sandbox/.git/
+03-version-control-git-github/lab-*/workspace/
+03-version-control-git-github/taskflow-sandbox/frontend/node_modules/
