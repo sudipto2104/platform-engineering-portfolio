@@ -1,0 +1,16 @@
+# Local simulated Docker Hub — registry:2 on port 5001
+services:
+  registry:
+    image: registry:2
+    ports:
+      - "5001:5000"
+    volumes:
+      - taskflow_registry_data:/var/lib/registry
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5000/v2/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  taskflow_registry_data:

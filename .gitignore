@@ -29,3 +29,11 @@ __pycache__/
 06-python-javascript-foundations/lab-*/deliverables/*
 !06-python-javascript-foundations/lab-*/deliverables/.gitkeep
 06-python-javascript-foundations/lab-vue-frontend-reading/workspace/taskflow-ui/node_modules/
+
+# Week 7 Docker labs
+07-introduction-containers-docker/lab-*/deliverables/*
+!07-introduction-containers-docker/lab-*/deliverables/.gitkeep
+07-introduction-containers-docker/lab-docker-registry/solutions/mock-registry/
+07-introduction-containers-docker/lab-docker-registry/deliverables/mock-registry/
+07-introduction-containers-docker/taskflow-stack/frontend/node_modules/
+07-introduction-containers-docker/lab-docker-compose-stack/backups/

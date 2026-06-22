@@ -1,14 +1,29 @@
-# Week 7: Introduction to Containers with Docker
+# Week 7: Docker Fundamentals
 
-## Overview
+**Slug:** `docker-fundamentals`
 
-This directory contains coursework, labs, and projects for **Week 7** — **Introduction to Containers with Docker**.
+Containerize TaskFlow — Dockerfiles for frontend and backend, Docker Compose full stack, and registry publish workflows.
 
-## Contents
+## TaskFlow stack
 
-- Course materials and lab exercises
-- Notes and reference documentation
+Week 7 builds on Week 6 code reading. Shared application source: [`taskflow-stack/`](./taskflow-stack/).
+
+## Labs
+
+| Directory | Focus |
+|-----------|--------|
+| [`lab-dockerfile-containerization/`](./lab-dockerfile-containerization/) | Multi-stage Vue+Nginx Dockerfile, FastAPI backend + health checks |
+| [`lab-docker-compose-stack/`](./lab-docker-compose-stack/) | 4-service Compose, volumes, backup/restore, env display |
+| [`lab-docker-registry/`](./lab-docker-registry/) | Image tagging, simulated registry push/pull |
+
+Each lab includes `scripts/check.sh` and `scripts/solve.sh`.
+
+## Quick start
+
+```bash
+cd lab-dockerfile-containerization && ./scripts/solve.sh && ./scripts/check.sh
+```
 
 ## Status
 
-1 course
+Week 7 complete — 3 labs, TaskFlow stack, check/solve scripts.
