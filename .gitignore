@@ -3,3 +3,8 @@
 __pycache__/
 *.pyc
 .env
+
+# Lab-generated artifacts
+01-devops-platform-engineering-overview/taskflow/.git/
+01-devops-platform-engineering-overview/lab-platform-path/terraform/.terraform/
+01-devops-platform-engineering-overview/lab-platform-path/terraform/terraform.tfstate*

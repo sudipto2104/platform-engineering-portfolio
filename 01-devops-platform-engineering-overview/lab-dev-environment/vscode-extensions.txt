@@ -1,0 +1,10 @@
+# Platform Engineering bootcamp — recommended VS Code extensions
+ms-vscode-remote.remote-ssh
+ms-azuretools.vscode-docker
+hashicorp.terraform
+redhat.vscode-yaml
+ms-python.python
+eamodio.gitlens
+github.vscode-github-actions
+ms-kubernetes-tools.vscode-kubernetes-tools
+timonwong.shellcheck

@@ -1,0 +1,28 @@
+# Alternative to Terraform scaling — three explicit replicas (no Swarm required).
+# Usage: docker compose -f docker-compose.scale.yml up -d --build
+
+x-taskflow: &taskflow
+  image: taskflow:week1
+  build:
+    context: ../taskflow
+  environment:
+    TASKFLOW_VERSION: week1-compose
+  healthcheck:
+    test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+    interval: 10s
+    timeout: 3s
+    retries: 3
+
+services:
+  taskflow-1:
+    <<: *taskflow
+    container_name: taskflow-compose-1
+    ports: ["9080:8080"]
+  taskflow-2:
+    <<: *taskflow
+    container_name: taskflow-compose-2
+    ports: ["9081:8080"]
+  taskflow-3:
+    <<: *taskflow
+    container_name: taskflow-compose-3
+    ports: ["9082:8080"]
