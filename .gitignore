@@ -19,3 +19,8 @@ __pycache__/
 04-networking-basics/lab-http-nginx-tls/certs/*.key
 04-networking-basics/lab-*/deliverables/*
 !04-networking-basics/lab-*/deliverables/.gitkeep
+
+# Week 5 shell scripting labs
+05-shell-scripting-essentials/lab-*/deliverables/*
+!05-shell-scripting-essentials/lab-*/deliverables/.gitkeep
+05-shell-scripting-essentials/lab-loops-automation/workspace/backups/

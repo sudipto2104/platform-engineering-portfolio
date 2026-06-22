@@ -1,0 +1,5 @@
+ERROR timeout connecting redis
+INFO request ok
+WARN high latency
+ERROR db connection refused
+INFO health ok
