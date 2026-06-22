@@ -1,0 +1,68 @@
+---
+- name: Configure TaskFlow application servers
+  hosts: taskflow_app
+  become: true
+  vars:
+    compose_src: "{{ playbook_dir }}/../files/docker-compose.ec2.yml"
+
+  tasks:
+    - name: Ensure taskflow system group exists
+      ansible.builtin.group:
+        name: taskflow
+        state: present
+
+    - name: Ensure taskflow service user exists
+      ansible.builtin.user:
+        name: taskflow
+        group: taskflow
+        system: true
+        create_home: false
+        shell: /sbin/nologin
+
+    - name: Install required packages
+      ansible.builtin.yum:
+        name: "{{ docker_packages }}"
+        state: present
+
+    - name: Ensure Docker service is running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Create TaskFlow application directory
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Deploy docker-compose stack definition
+      ansible.builtin.copy:
+        src: "{{ compose_src }}"
+        dest: "{{ app_dir }}/docker-compose.yml"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Deploy Nginx reverse proxy configuration
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/taskflow.conf.j2"
+        dest: "{{ nginx_conf_path }}"
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Reload nginx
+
+    - name: Ensure Nginx service is running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+  handlers:
+    - name: Reload nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded

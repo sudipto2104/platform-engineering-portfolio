@@ -1,0 +1,4 @@
+---
+app_env: staging
+log_level: info
+enable_debug_endpoints: false

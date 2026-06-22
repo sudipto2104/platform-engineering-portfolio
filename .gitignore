@@ -59,3 +59,9 @@ __pycache__/
 11-infrastructure-as-code-terraform/**/.terraform/
 11-infrastructure-as-code-terraform/**/terraform.tfstate*
 11-infrastructure-as-code-terraform/**/terraform.tfvars
+
+# Week 12 Ansible labs
+12-configuration-management-ansible/lab-*/deliverables/*
+!12-configuration-management-ansible/lab-*/deliverables/.gitkeep
+12-configuration-management-ansible/**/.vault_pass
+12-configuration-management-ansible/**/vendor/

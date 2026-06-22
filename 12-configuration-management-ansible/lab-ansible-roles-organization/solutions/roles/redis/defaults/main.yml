@@ -1,0 +1,4 @@
+---
+redis_image: redis:7-alpine
+redis_container_name: taskflow-redis
+redis_port: 6379

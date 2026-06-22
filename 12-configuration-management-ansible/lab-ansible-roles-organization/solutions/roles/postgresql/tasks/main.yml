@@ -1,0 +1,21 @@
+---
+- name: Ensure PostgreSQL data directory exists
+  ansible.builtin.file:
+    path: "{{ postgres_data_dir }}"
+    state: directory
+    mode: "0700"
+
+- name: Deploy PostgreSQL container unit
+  ansible.builtin.template:
+    src: postgres-container.sh.j2
+    dest: "{{ app_dir }}/run-postgres.sh"
+    mode: "0755"
+
+- name: Record PostgreSQL role configuration
+  ansible.builtin.copy:
+    dest: "{{ app_dir }}/postgres.env"
+    mode: "0600"
+    content: |
+      POSTGRES_DB={{ postgres_db }}
+      POSTGRES_USER={{ postgres_user }}
+      POSTGRES_IMAGE={{ postgres_image }}

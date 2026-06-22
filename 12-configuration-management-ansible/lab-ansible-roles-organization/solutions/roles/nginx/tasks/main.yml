@@ -1,0 +1,13 @@
+---
+- name: Deploy TaskFlow Nginx configuration
+  ansible.builtin.template:
+    src: taskflow.conf.j2
+    dest: "{{ nginx_conf_path }}"
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Ensure Nginx is running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true

@@ -1,0 +1,50 @@
+name: TaskFlow Ansible Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+  push:
+    branches: [main]
+    paths:
+      - '12-configuration-management-ansible/lab-ansible-multienv-deployment/**'
+
+jobs:
+  ansible-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'dev' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: pip install ansible
+
+      - name: Install Galaxy roles
+        working-directory: 12-configuration-management-ansible/lab-ansible-multienv-deployment/deliverables
+        run: ansible-galaxy install -r requirements.yml -p vendor/roles
+
+      - name: Syntax check
+        working-directory: 12-configuration-management-ansible/lab-ansible-multienv-deployment/deliverables
+        run: |
+          ENV="${{ github.event.inputs.environment || 'dev' }}"
+          ansible-playbook -i inventories/${ENV}/hosts.ini playbooks/deploy.yml --syntax-check
+
+      - name: Deploy TaskFlow
+        if: github.event_name == 'workflow_dispatch'
+        working-directory: 12-configuration-management-ansible/lab-ansible-multienv-deployment/deliverables
+        env:
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+        run: |
+          echo "$ANSIBLE_VAULT_PASSWORD" > .vault_pass
+          ansible-playbook \
+            -i inventories/${{ github.event.inputs.environment }}/hosts.ini \
+            playbooks/deploy.yml \
+            --vault-password-file .vault_pass

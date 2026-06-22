@@ -1,0 +1,42 @@
+---
+- name: Deploy TaskFlow to target environment
+  hosts: taskflow_app
+  become: true
+  vars_files:
+    - "{{ playbook_dir }}/../vault/secrets.yml"
+  pre_tasks:
+    - name: Validate environment is set
+      ansible.builtin.assert:
+        that:
+          - environment is defined
+          - environment in ['dev', 'staging', 'production']
+        fail_msg: "Set environment via inventory group_vars"
+
+    - name: Show deployment context
+      ansible.builtin.debug:
+        msg: "Deploying TaskFlow to {{ environment }} ({{ app_env }}) on {{ inventory_hostname }}"
+
+  roles:
+    - role: common
+    - role: geerlingguy.docker
+      vars:
+        docker_users:
+          - ec2-user
+    - role: nginx
+    - role: postgresql
+      vars:
+        postgres_password: "{{ postgres_password }}"
+    - role: redis
+
+  post_tasks:
+    - name: Write environment marker
+      ansible.builtin.copy:
+        dest: "{{ app_dir }}/environment.json"
+        mode: "0644"
+        content: |
+          {
+            "project": "{{ project }}",
+            "environment": "{{ environment }}",
+            "app_env": "{{ app_env }}",
+            "replicas": {{ app_replicas | int }}
+          }

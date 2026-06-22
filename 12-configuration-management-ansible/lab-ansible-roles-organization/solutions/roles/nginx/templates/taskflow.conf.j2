@@ -1,0 +1,26 @@
+upstream taskflow_api {
+    server 127.0.0.1:{{ api_upstream_port }};
+}
+
+upstream taskflow_ui {
+    server 127.0.0.1:{{ ui_upstream_port }};
+}
+
+server {
+    listen {{ nginx_listen_port }};
+    server_name _;
+
+    location /api/ {
+        proxy_pass http://taskflow_api/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /health {
+        proxy_pass http://taskflow_api/health;
+    }
+
+    location / {
+        proxy_pass http://taskflow_ui/;
+    }
+}

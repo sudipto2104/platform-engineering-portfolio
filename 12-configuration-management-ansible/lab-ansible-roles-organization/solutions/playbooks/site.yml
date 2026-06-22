@@ -1,0 +1,13 @@
+---
+- name: Deploy TaskFlow stack via roles
+  hosts: taskflow_app
+  become: true
+  roles:
+    - role: common
+    - role: geerlingguy.docker
+      vars:
+        docker_users:
+          - ec2-user
+    - role: nginx
+    - role: postgresql
+    - role: redis

@@ -1,0 +1,6 @@
+---
+project: taskflow
+app_dir: /opt/taskflow
+base_packages:
+  - git
+  - nginx

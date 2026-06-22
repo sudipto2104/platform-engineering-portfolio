@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+docker rm -f {{ redis_container_name }} 2>/dev/null || true
+docker run -d \
+  --name {{ redis_container_name }} \
+  --restart unless-stopped \
+  -p 127.0.0.1:{{ redis_port }}:6379 \
+  {{ redis_image }}

@@ -1,0 +1,8 @@
+---
+project: taskflow
+app_dir: /opt/taskflow
+nginx_conf_path: /etc/nginx/conf.d/taskflow.conf
+docker_packages:
+  - docker
+  - nginx
+  - git

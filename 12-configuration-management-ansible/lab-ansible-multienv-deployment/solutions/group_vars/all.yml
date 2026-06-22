@@ -1,0 +1,5 @@
+---
+project: taskflow
+app_dir: /opt/taskflow
+taskflow_api_image: taskflow-api:week7
+taskflow_ui_image: taskflow-ui:week7

@@ -1,0 +1,4 @@
+---
+app_env: dev
+log_level: debug
+enable_debug_endpoints: true

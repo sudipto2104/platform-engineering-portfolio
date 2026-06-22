@@ -1,0 +1,5 @@
+---
+nginx_conf_path: /etc/nginx/conf.d/taskflow.conf
+nginx_listen_port: 80
+api_upstream_port: 8080
+ui_upstream_port: 3000

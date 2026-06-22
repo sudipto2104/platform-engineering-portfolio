@@ -1,0 +1,14 @@
+---
+- name: Deploy Redis container unit
+  ansible.builtin.template:
+    src: redis-container.sh.j2
+    dest: "{{ app_dir }}/run-redis.sh"
+    mode: "0755"
+
+- name: Record Redis role configuration
+  ansible.builtin.copy:
+    dest: "{{ app_dir }}/redis.env"
+    mode: "0644"
+    content: |
+      REDIS_IMAGE={{ redis_image }}
+      REDIS_PORT={{ redis_port }}

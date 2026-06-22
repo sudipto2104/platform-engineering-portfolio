@@ -1,0 +1,3 @@
+---
+- name: TaskFlow server configuration
+  ansible.builtin.import_playbook: taskflow-servers.yml

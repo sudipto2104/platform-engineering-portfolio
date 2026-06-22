@@ -1,0 +1,4 @@
+---
+app_env: production
+log_level: warn
+enable_debug_endpoints: false
