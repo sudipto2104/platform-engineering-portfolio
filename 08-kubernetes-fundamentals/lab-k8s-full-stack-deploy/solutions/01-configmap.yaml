@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: taskflow-config
+  namespace: taskflow
+data:
+  APP_ENV: dev
+  POSTGRES_HOST: postgres.taskflow.svc.cluster.local
+  POSTGRES_DB: taskflow
+  POSTGRES_USER: taskflow
+  REDIS_HOST: redis.taskflow.svc.cluster.local
+  VITE_APP_ENV: dev

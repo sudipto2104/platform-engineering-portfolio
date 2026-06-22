@@ -37,3 +37,7 @@ __pycache__/
 07-introduction-containers-docker/lab-docker-registry/deliverables/mock-registry/
 07-introduction-containers-docker/taskflow-stack/frontend/node_modules/
 07-introduction-containers-docker/lab-docker-compose-stack/backups/
+
+# Week 8 Kubernetes labs
+08-kubernetes-fundamentals/lab-*/deliverables/*
+!08-kubernetes-fundamentals/lab-*/deliverables/.gitkeep

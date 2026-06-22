@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: taskflow-config
+  namespace: taskflow-lab2
+data:
+  APP_ENV: dev
+  LOG_LEVEL: info
+  POSTGRES_HOST: postgres
+  POSTGRES_DB: taskflow
+  POSTGRES_USER: taskflow
+  REDIS_HOST: redis
+  REDIS_PORT: "6379"

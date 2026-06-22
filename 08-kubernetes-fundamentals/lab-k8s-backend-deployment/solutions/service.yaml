@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskflow-api
+  namespace: taskflow-lab1
+  labels:
+    app: taskflow-api
+spec:
+  type: ClusterIP
+  selector:
+    app: taskflow-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
