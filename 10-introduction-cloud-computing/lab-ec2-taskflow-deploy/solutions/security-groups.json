@@ -1,0 +1,23 @@
+{
+  "taskflow-web-sg": {
+    "description": "TaskFlow web tier — HTTP/HTTPS from internet",
+    "ingress": [
+      { "port": 80, "protocol": "tcp", "cidr": "0.0.0.0/0", "description": "HTTP" },
+      { "port": 443, "protocol": "tcp", "cidr": "0.0.0.0/0", "description": "HTTPS" }
+    ],
+    "egress": [
+      { "port": 0, "protocol": "-1", "cidr": "0.0.0.0/0", "description": "All outbound" }
+    ]
+  },
+  "taskflow-app-sg": {
+    "description": "TaskFlow app tier — API from web SG only",
+    "ingress": [
+      { "port": 8080, "protocol": "tcp", "source_sg": "taskflow-web-sg", "description": "API from Nginx" },
+      { "port": 22, "protocol": "tcp", "cidr": "10.30.0.0/16", "description": "SSH from VPC bastion" }
+    ],
+    "egress": [
+      { "port": 5432, "protocol": "tcp", "source_sg": "taskflow-data-sg", "description": "PostgreSQL" },
+      { "port": 6379, "protocol": "tcp", "source_sg": "taskflow-data-sg", "description": "Redis" }
+    ]
+  }
+}

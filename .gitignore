@@ -46,3 +46,9 @@ __pycache__/
 09-kubernetes-intermediate/lab-*/deliverables/*
 !09-kubernetes-intermediate/lab-*/deliverables/.gitkeep
 09-kubernetes-intermediate/lab-helm-multi-environment/deliverables/rendered-*.yaml
+
+# Week 10 AWS cloud labs
+10-introduction-cloud-computing/lab-*/deliverables/*
+!10-introduction-cloud-computing/lab-*/deliverables/.gitkeep
+10-introduction-cloud-computing/lab-vpc-iam-security/deliverables/terraform/.terraform/
+10-introduction-cloud-computing/lab-vpc-iam-security/solutions/terraform/.terraform/

@@ -1,0 +1,32 @@
+services:
+  api:
+    image: taskflow-api:week7
+    environment:
+      APP_ENV: aws-ec2
+      TASKFLOW_VERSION: week10-ec2
+    expose:
+      - "8080"
+    restart: unless-stopped
+
+  ui:
+    image: taskflow-ui:week7
+    expose:
+      - "80"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: taskflow
+      POSTGRES_USER: taskflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+volumes:
+  pgdata:

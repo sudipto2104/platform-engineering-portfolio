@@ -1,0 +1,42 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "TaskFlowS3Attachments",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:ListBucket",
+        "s3:DeleteObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::taskflow-attachments-*",
+        "arn:aws:s3:::taskflow-attachments-*/*"
+      ]
+    },
+    {
+      "Sid": "TaskFlowECRPull",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "TaskFlowSSMSession",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:UpdateInstanceInformation",
+        "ssmmessages:CreateControlChannel",
+        "ssmmessages:CreateDataChannel",
+        "ssmmessages:OpenControlChannel",
+        "ssmmessages:OpenDataChannel"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
