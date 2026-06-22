@@ -1,0 +1,18 @@
+[Unit]
+Description=TaskFlow API (Gunicorn)
+After=network.target postgresql.service redis.service
+Wants=postgresql.service redis.service
+
+[Service]
+Type=simple
+User=taskflow
+Group=taskflow
+WorkingDirectory=/opt/taskflow
+Environment=TASKFLOW_VERSION=week2
+Environment=PORT=8080
+ExecStart=/opt/taskflow/.venv/bin/gunicorn --bind 127.0.0.1:8080 --workers 2 app:app
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
