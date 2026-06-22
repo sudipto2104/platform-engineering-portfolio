@@ -1,0 +1,25 @@
+vpc:
+  name: taskflow-production
+  cidr: 10.30.0.0/16
+  environment: production
+
+subnets:
+  - { name: public-web-a, cidr: 10.30.1.0/24, az: a, tier: web, public: true }
+  - { name: public-web-b, cidr: 10.30.2.0/24, az: b, tier: web, public: true }
+  - { name: public-web-c, cidr: 10.30.3.0/24, az: c, tier: web, public: true }
+  - { name: private-app-a, cidr: 10.30.10.0/22, az: a, tier: application, public: false }
+  - { name: private-app-b, cidr: 10.30.14.0/22, az: b, tier: application, public: false }
+  - { name: private-app-c, cidr: 10.30.18.0/22, az: c, tier: application, public: false }
+  - { name: private-data-a, cidr: 10.30.30.0/24, az: a, tier: database, public: false }
+  - { name: private-data-b, cidr: 10.30.31.0/24, az: b, tier: database, public: false }
+
+gateways:
+  internet_gateway: true
+  nat_gateway: per_az
+
+security:
+  nacl_public_deny: [22 except bastion CIDR]
+  sg_least_privilege: true
+  vpc_flow_logs: true
+
+rationale: 3-AZ HA; larger /22 app subnets for K8s; isolated data tier; flow logs for compliance.

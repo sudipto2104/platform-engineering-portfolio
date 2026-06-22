@@ -1,0 +1,31 @@
+services:
+  taskflow-1:
+    image: taskflow:week4
+    build:
+      context: ../../03-version-control-git-github/taskflow-sandbox
+    environment:
+      TASKFLOW_VERSION: week4-replica-1
+    expose: ["8080"]
+
+  taskflow-2:
+    image: taskflow:week4
+    environment:
+      TASKFLOW_VERSION: week4-replica-2
+    expose: ["8080"]
+
+  taskflow-3:
+    image: taskflow:week4
+    environment:
+      TASKFLOW_VERSION: week4-replica-3
+    expose: ["8080"]
+
+  nginx-lb:
+    image: nginx:1.25-alpine
+    ports:
+      - "8095:80"
+    volumes:
+      - ./config/nginx-lb.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - taskflow-1
+      - taskflow-2
+      - taskflow-3

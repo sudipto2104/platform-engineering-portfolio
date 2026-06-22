@@ -1,0 +1,24 @@
+$TTL 300
+@   IN  SOA ns1.taskflow.local. admin.taskflow.local. (
+        2026062201 ; serial
+        3600       ; refresh
+        600        ; retry
+        86400      ; expire
+        300 )      ; minimum TTL
+
+    IN  NS  ns1.taskflow.local.
+
+; A records
+api.taskflow.local.       IN  A   10.20.10.10
+api-staging.taskflow.local. IN A 10.20.10.11
+www.taskflow.local.       IN  A   10.20.1.10
+
+; CNAME
+health.taskflow.local.    IN  CNAME api.taskflow.local.
+
+; TXT (verification / ACME)
+taskflow.local.           IN  TXT "taskflow-bootcamp-week4"
+
+; MX (mail stub)
+taskflow.local.           IN  MX  10 mail.taskflow.local.
+mail.taskflow.local.      IN  A   10.20.1.20

@@ -1,0 +1,28 @@
+services:
+  taskflow:
+    image: taskflow:week4
+    build:
+      context: ../../03-version-control-git-github/taskflow-sandbox
+    environment:
+      TASKFLOW_VERSION: week4-http
+    expose:
+      - "8080"
+
+  nginx-http:
+    image: nginx:1.25-alpine
+    ports:
+      - "8090:80"
+    volumes:
+      - ./config/nginx-http.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - taskflow
+
+  nginx-https:
+    image: nginx:1.25-alpine
+    ports:
+      - "8443:443"
+    volumes:
+      - ./config/nginx-https.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - taskflow

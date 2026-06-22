@@ -13,3 +13,9 @@ __pycache__/
 03-version-control-git-github/taskflow-sandbox/.git/
 03-version-control-git-github/lab-*/workspace/
 03-version-control-git-github/taskflow-sandbox/frontend/node_modules/
+
+# Week 4 networking labs
+04-networking-basics/lab-http-nginx-tls/certs/*.crt
+04-networking-basics/lab-http-nginx-tls/certs/*.key
+04-networking-basics/lab-*/deliverables/*
+!04-networking-basics/lab-*/deliverables/.gitkeep

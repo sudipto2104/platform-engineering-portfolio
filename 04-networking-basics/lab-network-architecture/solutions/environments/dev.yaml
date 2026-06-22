@@ -1,0 +1,23 @@
+vpc:
+  name: taskflow-dev
+  cidr: 10.10.0.0/16
+  environment: dev
+
+subnets:
+  - { name: public-web-a, cidr: 10.10.1.0/24, az: a, tier: web, public: true }
+  - { name: private-app-a, cidr: 10.10.10.0/24, az: a, tier: application, public: false }
+  - { name: private-data-a, cidr: 10.10.20.0/24, az: a, tier: database, public: false }
+
+gateways:
+  internet_gateway: true
+  nat_gateway: false  # dev cost savings — public app subnet or VPN only
+
+security_groups:
+  sg-web:
+    ingress: ["443:0.0.0.0/0"]
+  sg-app:
+    ingress: ["8080:sg-web"]
+  sg-data:
+    ingress: ["5432:sg-app", "6379:sg-app"]
+
+rationale: Single-AZ acceptable; minimal NAT cost; mirrors tier separation for learning.

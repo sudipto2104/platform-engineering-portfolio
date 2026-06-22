@@ -1,0 +1,38 @@
+# TaskFlow VPC template — copy per environment
+vpc:
+  name: taskflow-ENV
+  cidr: 10.0.0.0/16
+  enable_dns_hostnames: true
+  enable_dns_support: true
+
+subnets:
+  - name: public-web-a
+    cidr: 10.0.1.0/24
+    az: a
+    tier: web
+    public: true
+  - name: private-app-a
+    cidr: 10.0.10.0/23
+    az: a
+    tier: application
+    public: false
+
+routing:
+  public_route_table:
+    routes:
+      - dest: 0.0.0.0/0
+        target: internet_gateway
+  private_route_table:
+    routes:
+      - dest: 0.0.0.0/0
+        target: nat_gateway
+
+security:
+  security_groups:
+    - name: sg-web
+      ingress: [443 from 0.0.0.0/0]
+    - name: sg-app
+      ingress: [8080 from sg-web]
+  nacls:
+    - name: nacl-public
+      allow: [80, 443]

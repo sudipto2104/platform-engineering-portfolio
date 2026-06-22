@@ -1,0 +1,22 @@
+vpc:
+  name: taskflow-staging
+  cidr: 10.20.0.0/16
+  environment: staging
+
+subnets:
+  - { name: public-web-a, cidr: 10.20.1.0/24, az: a, tier: web, public: true }
+  - { name: public-web-b, cidr: 10.20.2.0/24, az: b, tier: web, public: true }
+  - { name: private-app-a, cidr: 10.20.10.0/23, az: a, tier: application, public: false }
+  - { name: private-app-b, cidr: 10.20.12.0/23, az: b, tier: application, public: false }
+  - { name: private-data-a, cidr: 10.20.20.0/24, az: a, tier: database, public: false }
+  - { name: private-data-b, cidr: 10.20.21.0/24, az: b, tier: database, public: false }
+
+gateways:
+  internet_gateway: true
+  nat_gateway: true  # per AZ in production; shared in staging OK
+
+high_availability:
+  multi_az: true
+  min_nat_gateways: 1
+
+rationale: Production-like topology; multi-AZ app tier for TaskFlow API HA testing.
