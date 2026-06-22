@@ -1,5 +1,9 @@
 # Platform Engineering Portfolio
 
+<p align="center">
+  <img src=".github/repo-profile.jpg" alt="Platform Engineering Portfolio" width="640">
+</p>
+
 A structured learning portfolio covering 21 weeks of Platform Engineering curriculum — from DevOps fundamentals through production-ready internal developer platforms.
 
 ## Curriculum

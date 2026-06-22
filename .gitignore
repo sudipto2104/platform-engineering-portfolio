@@ -52,3 +52,10 @@ __pycache__/
 !10-introduction-cloud-computing/lab-*/deliverables/.gitkeep
 10-introduction-cloud-computing/lab-vpc-iam-security/deliverables/terraform/.terraform/
 10-introduction-cloud-computing/lab-vpc-iam-security/solutions/terraform/.terraform/
+
+# Week 11 Terraform labs
+11-infrastructure-as-code-terraform/lab-*/deliverables/*
+!11-infrastructure-as-code-terraform/lab-*/deliverables/.gitkeep
+11-infrastructure-as-code-terraform/**/.terraform/
+11-infrastructure-as-code-terraform/**/terraform.tfstate*
+11-infrastructure-as-code-terraform/**/terraform.tfvars
