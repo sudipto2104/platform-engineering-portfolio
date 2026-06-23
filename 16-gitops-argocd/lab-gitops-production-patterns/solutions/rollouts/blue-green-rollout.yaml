@@ -1,0 +1,40 @@
+# Argo Rollouts — Blue-Green deployment for TaskFlow UI
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: taskflow-ui-bluegreen
+  namespace: taskflow-production
+spec:
+  replicas: 3
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: taskflow-ui
+  template:
+    metadata:
+      labels:
+        app: taskflow-ui
+    spec:
+      containers:
+        - name: ui
+          image: taskflow-ui:week7
+          ports:
+            - containerPort: 80
+  strategy:
+    blueGreen:
+      activeService: taskflow-ui-active
+      previewService: taskflow-ui-preview
+      autoPromotionEnabled: false
+      scaleDownDelaySeconds: 30
+      prePromotionAnalysis:
+        templates:
+          - templateName: taskflow-ui-health
+        args:
+          - name: service-name
+            value: taskflow-ui-preview
+      postPromotionAnalysis:
+        templates:
+          - templateName: taskflow-ui-health
+        args:
+          - name: service-name
+            value: taskflow-ui-active

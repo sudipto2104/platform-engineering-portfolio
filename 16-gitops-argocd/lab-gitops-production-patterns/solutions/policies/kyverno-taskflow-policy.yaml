@@ -1,0 +1,46 @@
+# Kyverno policy-as-code — require TaskFlow standard labels on all workloads
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: taskflow-require-labels
+  annotations:
+    policies.kyverno.io/title: TaskFlow Required Labels
+    policies.kyverno.io/category: Platform Governance
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: require-taskflow-labels
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+                - Rollout
+              namespaces:
+                - taskflow-*
+      validate:
+        message: "TaskFlow workloads must have app.kubernetes.io/part-of=taskflow label"
+        pattern:
+          metadata:
+            labels:
+              app.kubernetes.io/part-of: taskflow
+    - name: require-resource-limits
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+              namespaces:
+                - taskflow-production
+      validate:
+        message: "Production containers must define CPU and memory limits"
+        pattern:
+          spec:
+            template:
+              spec:
+                containers:
+                  - resources:
+                      limits:
+                        memory: "?*"
+                        cpu: "?*"

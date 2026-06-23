@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: taskflow-staging
+  namespace: argocd
+spec:
+  project: taskflow
+  source:
+    repoURL: https://github.com/sudipto2104/platform-engineering-portfolio
+    targetRevision: main
+    path: 16-gitops-argocd/lab-kustomize-argocd-multenv/solutions/kustomize/overlays/staging
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: taskflow-staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: taskflow-multicluster
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            taskflow-enabled: "true"
+  template:
+    metadata:
+      name: "taskflow-{{name}}"
+      labels:
+        environment: "{{metadata.labels.environment}}"
+    spec:
+      project: taskflow
+      source:
+        repoURL: https://github.com/sudipto2104/platform-engineering-portfolio
+        targetRevision: main
+        path: "16-gitops-argocd/lab-kustomize-argocd-multenv/solutions/kustomize/overlays/{{metadata.labels.environment}}"
+      destination:
+        server: "{{server}}"
+        namespace: "taskflow-{{metadata.labels.environment}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      revisionHistoryLimit: 5

@@ -1,0 +1,26 @@
+# ArgoCD installation reference — apply official manifest, then this namespace config
+# kubectl create namespace argocd
+# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
+  labels:
+    app.kubernetes.io/part-of: argocd
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  application.instanceLabelKey: argocd.argoproj.io/instance
+  url: https://argocd.taskflow.local
+  # Enable anonymous read-only for lab (disable in production)
+  users.anonymous.enabled: "false"
+  # Self-heal timeout
+  timeout.reconciliation: 180s

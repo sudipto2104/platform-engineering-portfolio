@@ -1,0 +1,51 @@
+# Argo Rollouts — Canary progressive delivery for TaskFlow API
+# Requires: kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: taskflow-api-canary
+  namespace: taskflow-production
+  labels:
+    app.kubernetes.io/part-of: taskflow
+spec:
+  replicas: 4
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: taskflow-api
+  template:
+    metadata:
+      labels:
+        app: taskflow-api
+    spec:
+      containers:
+        - name: api
+          image: taskflow-api:week7
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+  strategy:
+    canary:
+      stableService: taskflow-api-stable
+      canaryService: taskflow-api-canary
+      trafficRouting:
+        nginx:
+          stableIngress: taskflow-api-ingress
+      steps:
+        - setWeight: 10
+        - pause: { duration: 2m }
+        - setWeight: 30
+        - pause: { duration: 2m }
+        - setWeight: 60
+        - pause: { duration: 2m }
+        - setWeight: 100
+      analysis:
+        templates:
+          - templateName: taskflow-success-rate
+        startingStep: 1
+        args:
+          - name: service-name
+            value: taskflow-api-canary
