@@ -1,0 +1,14 @@
+# TaskFlow platform CLI configuration
+environment: dev
+namespace: taskflow
+
+aws:
+  region: us-east-1
+  s3_bucket: taskflow-attachments-dev
+
+api:
+  base_url: http://localhost:8080
+  timeout_seconds: 10
+
+logging:
+  level: INFO

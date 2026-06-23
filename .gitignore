@@ -71,3 +71,9 @@ __pycache__/
 !13-internal-developer-portals/lab-*/deliverables/.gitkeep
 13-internal-developer-portals/**/node_modules/
 13-internal-developer-portals/**/yarn.lock
+
+# Week 14 Python platform engineering labs
+14-python-platform-engineering-part-1/lab-*/deliverables/*
+!14-python-platform-engineering-part-1/lab-*/deliverables/.gitkeep
+14-python-platform-engineering-part-1/**/.venv/
+14-python-platform-engineering-part-1/**/__pycache__/
