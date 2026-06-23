@@ -1,0 +1,33 @@
+groups:
+  - name: taskflow.rules
+    rules:
+      - alert: TaskFlowApiDown
+        expr: up{job="taskflow-exporter"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "TaskFlow API exporter is down"
+          description: "Exporter {{ $labels.instance }} has been unreachable for 2 minutes."
+
+      - alert: TaskFlowHighErrorRate
+        expr: |
+          rate(taskflow_http_requests_total{status=~"5.."}[5m])
+          / rate(taskflow_http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "TaskFlow error rate above 5%"
+
+      - alert: TaskFlowHighLatency
+        expr: |
+          histogram_quantile(0.95,
+            rate(taskflow_http_request_duration_seconds_bucket[5m])
+          ) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "TaskFlow p95 latency above 500ms"

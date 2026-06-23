@@ -1,0 +1,40 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: taskflow-api
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/part-of: taskflow
+    release: prometheus
+spec:
+  namespaceSelector:
+    matchNames:
+      - taskflow
+      - taskflow-production
+  selector:
+    matchLabels:
+      app: taskflow-api
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+      scrapeTimeout: 10s
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskflow-exporter
+  namespace: taskflow
+  labels:
+    app: taskflow-exporter
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9100"
+    prometheus.io/path: "/metrics"
+spec:
+  selector:
+    app: taskflow-exporter
+  ports:
+    - name: metrics
+      port: 9100
+      targetPort: 9100

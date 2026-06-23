@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskflow-monitor-agent
+  namespace: taskflow
+  labels:
+    app: taskflow-monitor-agent
+    app.kubernetes.io/part-of: taskflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taskflow-monitor-agent
+  template:
+    metadata:
+      labels:
+        app: taskflow-monitor-agent
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9101"
+    spec:
+      serviceAccountName: taskflow-monitor-agent
+      containers:
+        - name: agent
+          image: taskflow-monitor-agent:week17
+          command: ["python", "-m", "taskflow_monitor_agent", "--interval", "30"]
+          ports:
+            - containerPort: 9101
+              name: metrics
+          env:
+            - name: TASKFLOW_NAMESPACE
+              value: taskflow
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9101
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: taskflow-monitor-agent
+  namespace: taskflow
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: taskflow-monitor-agent
+  namespace: taskflow
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: taskflow-monitor-agent
+  namespace: taskflow
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: taskflow-monitor-agent
+subjects:
+  - kind: ServiceAccount
+    name: taskflow-monitor-agent
+    namespace: taskflow

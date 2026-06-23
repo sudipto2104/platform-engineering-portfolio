@@ -88,3 +88,9 @@ __pycache__/
 # Week 16 GitOps ArgoCD labs
 16-gitops-argocd/lab-*/deliverables/*
 !16-gitops-argocd/lab-*/deliverables/.gitkeep
+
+# Week 17 Monitoring observability labs
+17-monitoring-observability/lab-*/deliverables/*
+!17-monitoring-observability/lab-*/deliverables/.gitkeep
+17-monitoring-observability/**/.venv/
+17-monitoring-observability/**/__pycache__/

@@ -1,0 +1,60 @@
+groups:
+  - name: taskflow.production
+    rules:
+      - alert: TaskFlowApiDown
+        expr: up{job="taskflow-exporter"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          team: platform
+          namespace: taskflow-production
+        annotations:
+          summary: "TaskFlow API is down"
+          description: "Exporter unreachable for 2+ minutes in production."
+          runbook_url: "https://github.com/sudipto2104/platform-engineering-portfolio/blob/main/17-monitoring-observability/lab-monitoring-agent-self-healing/solutions/MONITORING_AGENT_GUIDE.md"
+
+      - alert: TaskFlowHighErrorRate
+        expr: |
+          (
+            rate(taskflow_http_requests_total{status=~"5.."}[5m])
+            / rate(taskflow_http_requests_total[5m])
+          ) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Error rate above 5%"
+          description: "5xx rate is {{ $value | humanizePercentage }} over 5 minutes."
+
+      - alert: TaskFlowHighLatencyP95
+        expr: |
+          histogram_quantile(0.95,
+            rate(taskflow_http_request_duration_seconds_bucket[5m])
+          ) > 1.0
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "p95 latency above 1s"
+
+      - alert: TaskFlowPodCrashLooping
+        expr: |
+          rate(kube_pod_container_status_restarts_total{namespace=~"taskflow.*"}[15m]) > 0
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Pod {{ $labels.pod }} is crash looping"
+
+      - alert: TaskFlowDiskSpaceLow
+        expr: |
+          (node_filesystem_avail_bytes / node_filesystem_size_bytes) < 0.1
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Disk space below 10% on {{ $labels.instance }}"

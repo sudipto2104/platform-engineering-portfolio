@@ -1,0 +1,62 @@
+global:
+  resolve_timeout: 5m
+  slack_api_url: ${SLACK_WEBHOOK_URL}
+  smtp_smarthost: smtp.taskflow.local:587
+  smtp_from: alerts@taskflow.io
+  smtp_auth_username: alerts@taskflow.io
+  smtp_auth_password: ${SMTP_PASSWORD}
+
+route:
+  receiver: default-slack
+  group_by: [alertname, namespace, severity]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+  routes:
+    - match:
+        severity: critical
+      receiver: pagerduty-critical
+      continue: true
+    - match:
+        severity: critical
+      receiver: email-oncall
+    - match:
+        severity: warning
+      receiver: slack-platform
+    - match:
+        team: platform
+      receiver: slack-platform
+
+receivers:
+  - name: default-slack
+    slack_configs:
+      - channel: "#taskflow-alerts"
+        title: "TaskFlow Alert"
+        text: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+        send_resolved: true
+
+  - name: slack-platform
+    slack_configs:
+      - channel: "#platform-engineering"
+        title: "[{{ .Status }}] {{ .CommonLabels.alertname }}"
+        text: "{{ .CommonAnnotations.description }}"
+        send_resolved: true
+
+  - name: email-oncall
+    email_configs:
+      - to: oncall@taskflow.io
+        headers:
+          Subject: "CRITICAL: {{ .CommonLabels.alertname }}"
+
+  - name: pagerduty-critical
+    pagerduty_configs:
+      - routing_key: ${PAGERDUTY_ROUTING_KEY}
+        severity: critical
+        description: "{{ .CommonAnnotations.summary }}"
+
+inhibit_rules:
+  - source_match:
+      severity: critical
+    target_match:
+      severity: warning
+    equal: [alertname, namespace]
