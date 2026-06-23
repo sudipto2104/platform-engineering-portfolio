@@ -77,3 +77,10 @@ __pycache__/
 !14-python-platform-engineering-part-1/lab-*/deliverables/.gitkeep
 14-python-platform-engineering-part-1/**/.venv/
 14-python-platform-engineering-part-1/**/__pycache__/
+
+# Week 15 Python platform engineering labs
+15-python-platform-engineering-part-2/lab-*/deliverables/*
+!15-python-platform-engineering-part-2/lab-*/deliverables/.gitkeep
+15-python-platform-engineering-part-2/**/.venv/
+15-python-platform-engineering-part-2/**/__pycache__/
+15-python-platform-engineering-part-2/**/*.db
