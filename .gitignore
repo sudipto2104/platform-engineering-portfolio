@@ -94,3 +94,7 @@ __pycache__/
 !17-monitoring-observability/lab-*/deliverables/.gitkeep
 17-monitoring-observability/**/.venv/
 17-monitoring-observability/**/__pycache__/
+
+# Week 18 Secrets management labs
+18-secrets-management/lab-*/deliverables/*
+!18-secrets-management/lab-*/deliverables/.gitkeep

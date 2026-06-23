@@ -1,0 +1,31 @@
+# TaskFlow Vault — dev/single-node mode (use HA + auto-unseal in production)
+server:
+  dev:
+    enabled: true
+    devRootToken: "taskflow-dev-root"
+  standalone:
+    enabled: false
+  dataStorage:
+    enabled: true
+    size: 1Gi
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+      cpu: 500m
+  extraEnvironmentVars:
+    VAULT_LOG_LEVEL: info
+    VAULT_API_ADDR: http://vault.vault.svc:8200
+
+ui:
+  enabled: true
+  serviceType: ClusterIP
+
+injector:
+  enabled: true
+  authPath: auth/kubernetes
+
+csi:
+  enabled: true

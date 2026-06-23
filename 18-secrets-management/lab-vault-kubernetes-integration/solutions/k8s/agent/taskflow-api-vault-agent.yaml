@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskflow-api
+  namespace: taskflow
+  labels:
+    app: taskflow-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: taskflow-api
+  template:
+    metadata:
+      labels:
+        app: taskflow-api
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-status: "update"
+        vault.hashicorp.com/role: "taskflow-api"
+        vault.hashicorp.com/agent-inject-secret-config: "secret/data/taskflow/app/config"
+        vault.hashicorp.com/agent-inject-template-config: |
+          {{- with secret "secret/data/taskflow/app/config" -}}
+          export TASKFLOW_API_KEY="{{ .Data.data.api_key }}"
+          export JWT_SECRET="{{ .Data.data.jwt_secret }}"
+          export APP_ENV="{{ .Data.data.environment }}"
+          {{- end }}
+        vault.hashicorp.com/agent-pre-populate-only: "false"
+    spec:
+      serviceAccountName: taskflow-api
+      containers:
+        - name: api
+          image: taskflow-api:week7
+          command: ["/bin/sh", "-c"]
+          args:
+            - source /vault/secrets/config && exec uvicorn main:app --host 0.0.0.0 --port 8080
+          ports:
+            - containerPort: 8080
+          env:
+            - name: VAULT_ADDR
+              value: "http://vault.vault.svc:8200"

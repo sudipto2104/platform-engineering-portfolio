@@ -1,0 +1,10 @@
+{
+  "plugin_name": "postgresql-database-plugin",
+  "allowed_roles": ["taskflow-app", "taskflow-readonly"],
+  "connection_url": "postgresql://{{username}}:{{password}}@postgres.taskflow.svc:5432/taskflow?sslmode=disable",
+  "username": "vault_admin",
+  "password": "vault_admin_password",
+  "max_open_connections": 5,
+  "max_idle_connections": 2,
+  "max_connection_lifetime": "300s"
+}
