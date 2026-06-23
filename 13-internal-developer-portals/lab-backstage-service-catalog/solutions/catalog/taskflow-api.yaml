@@ -1,0 +1,37 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: taskflow-rest-api
+  title: TaskFlow REST API
+  description: OpenAPI specification for the TaskFlow backend service.
+  tags:
+    - rest
+    - openapi
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:platform-team
+  system: taskflow
+  definition: |
+    openapi: "3.0.0"
+    info:
+      title: TaskFlow API
+      version: "0.7.0"
+    paths:
+      /health:
+        get:
+          summary: Health check
+          responses:
+            "200":
+              description: Service healthy
+      /api/tasks:
+        get:
+          summary: List tasks
+          responses:
+            "200":
+              description: Task list
+        post:
+          summary: Create task
+          responses:
+            "201":
+              description: Task created

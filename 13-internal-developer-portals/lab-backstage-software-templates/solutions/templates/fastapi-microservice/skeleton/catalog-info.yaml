@@ -1,0 +1,24 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.serviceName }}
+  title: ${{ values.serviceName | title }}
+  description: ${{ values.description }}
+  annotations:
+    github.com/project-slug: ${{ values.repoUrl | parseRepoUrl | pick('owner') }}/${{ values.repoUrl | parseRepoUrl | pick('repo') }}
+    backstage.io/kubernetes-id: ${{ values.serviceName }}
+    backstage.io/kubernetes-namespace: taskflow
+    backstage.io/techdocs-ref: dir:.
+    grafana/dashboard-selector: "taskflow-services"
+    prometheus.io/rule: ${{ values.serviceName }}_slo
+  tags:
+    - fastapi
+    - python
+    - ${{ values.environment }}
+spec:
+  type: service
+  lifecycle: experimental
+  owner: ${{ values.owner }}
+  system: taskflow
+  providesApis:
+    - ${{ values.serviceName }}-api

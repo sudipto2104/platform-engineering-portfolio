@@ -1,0 +1,101 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: new-fastapi-microservice
+  title: New FastAPI Microservice
+  description: Scaffold a production-ready FastAPI service with CI/CD, catalog registration, and GitHub publishing.
+  tags:
+    - fastapi
+    - python
+    - microservice
+    - recommended
+  links:
+    - url: https://github.com/sudipto2104/platform-engineering-portfolio
+      title: TaskFlow Platform Repo
+      icon: github
+spec:
+  owner: group:platform-team
+  type: service
+
+  parameters:
+    - title: Service Details
+      required:
+        - serviceName
+        - owner
+        - description
+      properties:
+        serviceName:
+          title: Service Name
+          type: string
+          description: Kebab-case name (e.g. notification-service)
+          pattern: '^[a-z][a-z0-9-]*$'
+          ui:autofocus: true
+        owner:
+          title: Owner
+          type: string
+          description: GitHub team or user (e.g. platform-team)
+          default: platform-team
+        description:
+          title: Description
+          type: string
+          description: What this microservice does
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+            allowedOwners:
+              - sudipto2104
+
+    - title: Deployment Target
+      properties:
+        deployToKubernetes:
+          title: Include Kubernetes manifests
+          type: boolean
+          default: true
+        environment:
+          title: Target Environment
+          type: string
+          enum:
+            - dev
+            - staging
+            - production
+          default: dev
+
+  steps:
+    - id: fetch
+      name: Fetch Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          serviceName: ${{ parameters.serviceName }}
+          owner: ${{ parameters.owner }}
+          description: ${{ parameters.description }}
+          environment: ${{ parameters.environment }}
+
+    - id: publish
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        description: ${{ parameters.description }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: main
+        repoVisibility: public
+
+    - id: register
+      name: Register in Catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in Catalog
+        icon: catalog
+        entityRef: component:default/${{ parameters.serviceName }}

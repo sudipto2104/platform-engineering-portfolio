@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ serviceName }}
+  namespace: taskflow
+  labels:
+    app: {{ serviceName }}
+    backstage.io/kubernetes-id: {{ serviceName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ serviceName }}
+  template:
+    metadata:
+      labels:
+        app: {{ serviceName }}
+        backstage.io/kubernetes-id: {{ serviceName }}
+    spec:
+      containers:
+        - name: {{ serviceName }}
+          image: {{ serviceName }}:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: APP_ENV
+              value: "{{ environment }}"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10

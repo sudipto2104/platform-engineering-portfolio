@@ -65,3 +65,9 @@ __pycache__/
 !12-configuration-management-ansible/lab-*/deliverables/.gitkeep
 12-configuration-management-ansible/**/.vault_pass
 12-configuration-management-ansible/**/vendor/
+
+# Week 13 Backstage labs
+13-internal-developer-portals/lab-*/deliverables/*
+!13-internal-developer-portals/lab-*/deliverables/.gitkeep
+13-internal-developer-portals/**/node_modules/
+13-internal-developer-portals/**/yarn.lock

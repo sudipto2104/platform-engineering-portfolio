@@ -1,0 +1,86 @@
+app:
+  title: TaskFlow Developer Portal
+  baseUrl: http://localhost:3000
+
+organization:
+  name: TaskFlow Platform Engineering
+
+backend:
+  baseUrl: http://localhost:7007
+  listen:
+    port: 7007
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+  reading:
+    allow:
+      - host: raw.githubusercontent.com
+      - host: github.com
+
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Resource, Location, Domain, Group, User, Template]
+  locations:
+    - type: file
+      target: ../../catalog/domain.yaml
+    - type: file
+      target: ../../catalog/system.yaml
+    - type: file
+      target: ../../catalog/taskflow-frontend.yaml
+    - type: file
+      target: ../../catalog/taskflow-backend.yaml
+    - type: file
+      target: ../../catalog/taskflow-postgres.yaml
+    - type: file
+      target: ../../catalog/taskflow-redis.yaml
+    - type: file
+      target: ../../catalog/taskflow-api.yaml
+
+auth:
+  environment: development
+  providers:
+    guest:
+      dangerouslyAllowOutsideDevelopment: true
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+
+kubernetes:
+  serviceLocatorMethod:
+    type: multiTenant
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - name: taskflow-local
+          url: http://127.0.0.1:8001
+          authProvider: serviceAccount
+          skipTLSVerify: true
+          skipMetricsLookup: false
+
+proxy:
+  endpoints:
+    '/prometheus':
+      target: http://localhost:9090
+      changeOrigin: true
+    '/grafana':
+      target: http://localhost:3001
+      changeOrigin: true
+    '/taskflow-api':
+      target: http://localhost:8080
+      changeOrigin: true
+
+techdocs:
+  builder: local
+  generator:
+    runIn: local
+  publisher:
+    type: local

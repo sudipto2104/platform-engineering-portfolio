@@ -1,0 +1,64 @@
+# Merge into app-config.yaml — GitHub OAuth + RBAC for TaskFlow portal
+
+auth:
+  environment: development
+  providers:
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+        signIn:
+          resolvers:
+            - resolver: usernameMatchingUserEntityName
+
+permission:
+  enabled: true
+  policy:
+    allow:
+      - principal: group:platform-team
+        resource: catalog-entity
+        action: read
+      - principal: group:platform-team
+        resource: catalog-entity
+        action: create
+      - principal: group:platform-team
+        resource: scaffolder-action
+        action: execute
+      - principal: group:platform-team
+        resource: scaffolder-template
+        action: read
+      - principal: user:default/guest
+        resource: catalog-entity
+        action: read
+
+catalog:
+  providers:
+    githubOrg:
+      id: production
+      organization: sudipto2104
+      schedule:
+        frequency: { minutes: 30 }
+        timeout: { minutes: 3 }
+
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+kubernetes:
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - name: taskflow-local
+          url: http://127.0.0.1:8001
+          authProvider: serviceAccount
+          skipTLSVerify: true
+
+proxy:
+  endpoints:
+    '/prometheus':
+      target: http://localhost:9090
+      changeOrigin: true
+    '/grafana':
+      target: http://localhost:3001
+      changeOrigin: true

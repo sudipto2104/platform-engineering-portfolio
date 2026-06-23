@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: taskflow-redis
+  title: TaskFlow Redis Cache
+  description: Session and cache layer — Redis 7 Deployment.
+  annotations:
+    backstage.io/kubernetes-id: taskflow-redis
+    backstage.io/kubernetes-namespace: taskflow
+  tags:
+    - cache
+    - redis
+spec:
+  type: cache
+  owner: group:platform-team
+  system: taskflow
+  dependencyOf:
+    - component:taskflow-backend
+    - component:taskflow-frontend

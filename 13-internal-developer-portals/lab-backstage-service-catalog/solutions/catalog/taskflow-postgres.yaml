@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: taskflow-postgres
+  title: TaskFlow PostgreSQL
+  description: Primary relational datastore — PostgreSQL 16 StatefulSet with PVC.
+  annotations:
+    backstage.io/kubernetes-id: taskflow-postgres
+    backstage.io/kubernetes-namespace: taskflow
+  tags:
+    - database
+    - postgresql
+spec:
+  type: database
+  owner: group:platform-team
+  system: taskflow
+  dependencyOf:
+    - component:taskflow-backend

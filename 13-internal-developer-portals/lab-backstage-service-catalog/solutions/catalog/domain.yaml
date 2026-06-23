@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: taskflow-platform
+  title: TaskFlow Platform
+  description: Internal developer platform domain for the TaskFlow bootcamp project.
+  tags:
+    - platform-engineering
+    - bootcamp
+spec:
+  owner: group:platform-team

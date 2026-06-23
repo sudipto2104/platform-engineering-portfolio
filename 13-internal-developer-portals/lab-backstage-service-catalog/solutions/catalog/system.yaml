@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: taskflow
+  title: TaskFlow
+  description: Full-stack task management platform evolved across the 21-week bootcamp.
+  annotations:
+    backstage.io/techdocs-ref: dir:../../07-introduction-containers-docker/taskflow-stack
+    grafana/dashboard-selector: "taskflow-overview"
+    prometheus.io/rule: taskflow_slo
+  tags:
+    - production
+    - kubernetes
+spec:
+  owner: group:platform-team
+  domain: taskflow-platform

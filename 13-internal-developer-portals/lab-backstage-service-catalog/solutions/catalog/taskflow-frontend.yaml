@@ -1,0 +1,32 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: taskflow-frontend
+  title: TaskFlow Frontend
+  description: Vue 3 + Vite SPA served via Nginx. Evolved in Week 6, containerized in Week 7.
+  annotations:
+    github.com/project-slug: sudipto2104/platform-engineering-portfolio
+    backstage.io/source-location: url:https://github.com/sudipto2104/platform-engineering-portfolio/tree/main/07-introduction-containers-docker/taskflow-stack/frontend
+    backstage.io/kubernetes-id: taskflow-frontend
+    backstage.io/kubernetes-namespace: taskflow
+  tags:
+    - vue
+    - javascript
+    - spa
+  links:
+    - url: http://localhost:8080
+      title: Local UI
+      icon: web
+    - url: https://github.com/sudipto2104/platform-engineering-portfolio
+      title: GitHub
+      icon: github
+spec:
+  type: website
+  lifecycle: production
+  owner: group:platform-team
+  system: taskflow
+  dependsOn:
+    - component:taskflow-backend
+    - resource:taskflow-redis
+  consumesApis:
+    - taskflow-rest-api
